@@ -12,6 +12,7 @@ import dummyData from './dummy-data';
 // Import the Posts (plural!) and SearchBar components, since they are used inside App component
 // Import the dummyData
 import './App.css';
+import LikeSection from './components/Posts/LikeSection';
 
 const App = () => {
   const [posts , setPosts] = useState(dummyData);
@@ -20,6 +21,17 @@ const App = () => {
   // To make the search bar work (which is stretch) we'd need another state to hold the search term.
 
   const likePost = postId => {
+    
+    // setPosts(posts.map( post => {
+    //   if(post.id === postId){
+    //     return post = { ...posts}
+    //   } else {
+    //     return post
+    //   }
+    // }))
+    return setPosts(posts.map( post => post.likes))
+
+  }
     /*
       This function serves the purpose of increasing the number of likes by one, of the post with a given id.
 
@@ -31,26 +43,18 @@ const App = () => {
         - if the `id` of the post matches `postId`, return a new post object with the desired values (use the spread operator).
         - otherwise just return the post object unchanged.
      */
-    // post.id === postId ? const newPost = {(...rest)} : {post};
-    const newPost = (post) => {
-      if(post.id === postId){
-        const addPost = {...post}
-      return addPost
-      } else {
-         return post
-        }
-      };
-    setPosts(posts.map(newPost));
+
 
   return (
     <div className='App'>
-      { <SearchBar />/* Add SearchBar and Posts here to render them */}
-      { <Posts /> }
+      { /* Add SearchBar and Posts here to render them */}
+      <SearchBar />
+      <Posts likePost = {likePost} posts = {posts}/>
       {/* Check the implementation of each component, to see what props they require, if any! */}
       
     </div>
   );
 };
 
-}
+
 export default App;
